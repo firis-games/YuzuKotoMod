@@ -359,6 +359,18 @@ public class YuzuKotoMod {
                 Items.DIAMOND_SWORD,
                 Items.STICK, Items.IRON_AXE);
         
+        
+        //結月の祭壇のレシピを追加
+        GameRegistry.addRecipe(new ItemStack(YuzuKotoBlocks.YK_MOON_ENCHANTMENT_TABLE),
+                " Z ",
+                "VYV",
+                " X ",
+                'X', Blocks.ENCHANTING_TABLE,
+                'Y', new ItemStack(Blocks.WOOL, 1, 10),
+                'Z', YuzuKotoItems.PURPLE_DIAMOND,
+                'V', Blocks.GOLD_BLOCK
+        );
+        
         //GUIの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(YuzuKotoMod.INSTANCE, new YKGuiHandler());
     }
@@ -408,7 +420,7 @@ public class YuzuKotoMod {
     public void postInit1(FMLPostInitializationEvent event) {
     	
         Blocks.RED_MUSHROOM_BLOCK.setCreativeTab(YuzuKotoCreativeTab);
-        Item a = Item.getItemFromBlock(Blocks.RED_MUSHROOM_BLOCK);
+        //Item a = Item.getItemFromBlock(Blocks.RED_MUSHROOM_BLOCK);
         
         
         
