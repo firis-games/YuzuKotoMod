@@ -1,0 +1,27 @@
+{
+	"__comment": "minecraft:chests/spawn_bonus_chest add custom pools",
+	"pools": [
+		{
+			"name": "main",
+			"rolls": 1,
+			"entries": [
+				{
+				"type": "item",
+				"name": "yuzukotomod:purple_diamond",
+				"weight": 1
+				}
+			]
+		},
+		{
+			"name": "main",
+			"rolls": 1,
+			"entries": [
+				{
+				"type": "item",
+				"name": "yuzukotomod:yuzukoto_block",
+				"weight": 1
+				}
+			]
+		}
+	]
+}

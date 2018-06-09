@@ -1,0 +1,8 @@
+{
+    "variants": {
+		"facing=north": { "model": "yuzukotomod:yuzukoto_block" },
+        "facing=south": { "model": "yuzukotomod:yuzukoto_block", "y": 180 },
+        "facing=west":  { "model": "yuzukotomod:yuzukoto_block", "y": 270 },
+        "facing=east":  { "model": "yuzukotomod:yuzukoto_block", "y": 90 }
+    }
+}

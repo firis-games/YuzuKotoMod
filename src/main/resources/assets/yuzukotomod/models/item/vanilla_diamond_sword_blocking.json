@@ -1,0 +1,7 @@
+{
+    "parent": "yuzukotomod:item/base_sword_blocking",
+    "textures": {
+        "layer0": "minecraft:items/diamond_sword"
+    },
+    "--comment": "ガードのモーション定義はbase_sword_blocking"
+}

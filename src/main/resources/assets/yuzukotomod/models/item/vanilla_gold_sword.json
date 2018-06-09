@@ -1,0 +1,15 @@
+{
+    "--comment": "通常剣定義",
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "minecraft:items/gold_sword"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "sword_blocking": 1
+            },
+            "model": "yuzukotomod:item/vanilla_gold_sword_blocking"
+        }
+    ]
+}

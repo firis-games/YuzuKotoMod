@@ -1,0 +1,15 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "yuzukotomod:items/purplediamond_sword"
+    },
+    "--comment": "ガードしたときの定義をどうするか？",
+    "overrides": [
+        {
+            "predicate": {
+                "blocking2": 1
+            },
+            "model": "yuzukotomod:item/purplediamond_sword_blocking"
+        }
+    ]
+}
