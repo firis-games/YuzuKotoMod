@@ -148,9 +148,7 @@ public class YuzuKotoMod {
     	
     	GameRegistry.registerTileEntity(YKTEMoonEnchantmentTable.class, "ykte_moon_enchantment_table");
     	
-    	
-    	
-        //マインカートの設定
+    	//マインカートの設定
         //モブの登録だけどうまくできない
         ResourceLocation rl3 = new ResourceLocation(YuzuKotoMod.MODID,
         		"ykminecart");
@@ -161,7 +159,10 @@ public class YuzuKotoMod {
     }
 	
 	
-
+	/**
+	 * 無効化している
+	 * @param event
+	 */
     public void preInit1(FMLPreInitializationEvent event) {
 		//ログだけ出力
         System.out.println("preInit");
@@ -229,11 +230,20 @@ public class YuzuKotoMod {
         );
         
         //PurpleDiamondのレシピ
+        /*
         GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
                 Blocks.DIAMOND_BLOCK,
                 Blocks.REDSTONE_BLOCK,
                 Blocks.LAPIS_BLOCK);
+        */
+        //ダイヤ＋染料に変更
+        GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
+                Items.DIAMOND,
+                new ItemStack(Items.DYE, 1, 5));
         
+        
+        //ツールレシピを削除
+        /*
         //紫ダイヤ剣
         GameRegistry.addRecipe(new ItemStack(YuzuKotoItems.PURPLEDIAMOND_SWORD),
                 "X",
@@ -301,12 +311,18 @@ public class YuzuKotoMod {
                 "X X",
                 'X', YuzuKotoItems.PURPLE_DIAMOND
         );
+        */
         
+        //ダイヤへの変換レシピを削除
+        /*
         //YuzuKotoBlock から PurpleDiamond
         GameRegistry.addSmelting(new ItemStack(YuzuKotoBlocks.YUZUKOTO_BLOCK),
 				new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
 				0.1f);
+        */
         
+        //燃料化を無効化
+        /*
         //YuzuKotoBlockは燃料
         GameRegistry.registerFuelHandler(new IFuelHandler(){
 			@Override
@@ -317,15 +333,16 @@ public class YuzuKotoMod {
 				}
 				return 0;
 			}
-			
 		});
+		*/
         
+        //琴葉ツルハシと紲星クワの修理素材設定
         //修理素材を設定する
         tmPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
-        amPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
+        //amPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
         
         
-        //PurpleDiamondのレシピ
+        //びっくり箱のレシピ
         GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.LUCKBOX_PURPLE),
                 Blocks.EMERALD_BLOCK,
                 new ItemStack(Items.DYE, 1, 5));
