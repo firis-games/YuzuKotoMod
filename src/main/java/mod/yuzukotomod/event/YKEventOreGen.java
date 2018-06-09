@@ -11,6 +11,12 @@ import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 
+/**
+ * イベントを登録してないから動作しない
+ * 鉱石を生成するイベント
+ * @author computer
+ *
+ */
 public class YKEventOreGen {
 	
 	/**

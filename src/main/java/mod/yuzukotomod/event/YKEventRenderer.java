@@ -1,15 +1,19 @@
 package mod.yuzukotomod.event;
 
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+
+/**
+ * 寝台トロッコ用の寝る処理
+ * 呼び出ししていない
+ * @author computer
+ *
+ */
 public class YKEventRenderer {
 	
 	
