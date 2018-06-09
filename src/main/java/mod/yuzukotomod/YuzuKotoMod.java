@@ -409,6 +409,8 @@ public class YuzuKotoMod {
         MinecraftForge.EVENT_BUS.register(new YKEventRenderer());
         */
         
+        //ボーナスチェスト追加用
+        MinecraftForge.EVENT_BUS.register(new YKLootTableLoadEvent());
 
     }
     
