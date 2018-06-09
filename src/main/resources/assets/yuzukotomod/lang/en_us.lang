@@ -1,0 +1,31 @@
+itemGroup.tabYuzuKoto=YuzuKotoMod
+
+item.purple_diamond.name=Purple Diamond
+
+item.purplediamond_pickaxe.name=Kotonoha Pickaxe
+item.purplediamond_hoe.name=Kizuna Hoe
+
+tile.yuzukoto_block.name=YuzuKoto Block
+
+item.luckbox_purple.name=Purple Lucky Box
+item.luckbox_red.name=Red Lucky Box
+item.luckbox_blue.name=Blue Lucky Box
+item.luckbox_yellow.name=Yellow Lucky Box
+
+entity.ykrabbit.name=Purple Rabbit
+
+enchantment.great_electric_fire=GEF
+enchantment.chicken_power=Chicken Power
+
+
+item.vanilla_wood_sword.name=Old Wood Sword
+item.vanilla_stone_sword.name=Old Stone Sword
+item.vanilla_iron_sword.name=Old Wood Sword
+item.vanilla_gold_sword.name=Old Golden Sword
+item.vanilla_diamond_sword.name=Old Diamond Sword
+
+gui.ykmoon_table.name=Moon Enchanter
+
+tile.yk_moon_enchantment_table.name=Moon Enchanter
+
+tool.kjizuna.message=Hungry!!!
