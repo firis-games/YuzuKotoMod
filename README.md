@@ -22,8 +22,8 @@ Releaseで公開しているMODは「結月さんと琴葉ちゃんのForgeで�
 - 古い剣
 
 詳しい内容についてはこちらをご覧下さい。
-![本編](http://www.nicovideo.jp/mylist/60984825)
-![短編集](http://www.nicovideo.jp/mylist/60984874)
+[本編](http://www.nicovideo.jp/mylist/60984825)
+[短編集](http://www.nicovideo.jp/mylist/60984874)
 
 
 ## 注意事項
