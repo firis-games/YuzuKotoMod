@@ -1,0 +1,71 @@
+package mod.yuzukotomod.entity.kettle;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
+
+/**
+ * やかん用
+ * @author computer
+ *
+ */
+public class YKRenderKettle <T extends YKEntityKettle> extends Render<T>{
+
+	/*
+	 * 
+	 */
+	private static final ResourceLocation MINECART_TEXTURES = new ResourceLocation("yuzukotomod", 
+    		"textures/entity/ykminecart.png");
+	
+	/**
+	 * コンストラクタ
+	 * @param renderManager
+	 */
+	public YKRenderKettle(RenderManager renderManager) {
+		
+		super(renderManager);
+		
+		//影のサイズ
+		this.shadowSize = 0.5F;
+	}
+
+	@Override
+	protected ResourceLocation getEntityTexture(T entity) {
+		return MINECART_TEXTURES;
+	}
+	
+	/**
+     * Renders the desired {@code T} type Entity.
+     */
+	@Override
+    public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks)
+    {
+    	//描画処理
+		GlStateManager.pushMatrix();
+        this.bindEntityTexture(entity);
+        
+        GlStateManager.translate(x, y, z);
+        GlStateManager.scale(1.0F, 1.0F, 1.0F);
+        
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        
+        GlStateManager.pushMatrix();
+        //ブロックの描画
+        Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(Blocks.DIAMOND_BLOCK.getDefaultState(),
+        		entity.getBrightness(partialTicks));
+
+        GlStateManager.popMatrix();
+        
+        
+        GlStateManager.popMatrix();
+        
+        
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+		
+    }
+
+}

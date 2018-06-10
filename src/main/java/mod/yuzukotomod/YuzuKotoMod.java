@@ -12,6 +12,8 @@ import mod.yuzukotomod.entity.YKEntityChicken;
 import mod.yuzukotomod.entity.YKEntityRabbit;
 import mod.yuzukotomod.entity.YKMineCart;
 import mod.yuzukotomod.entity.YKRenderRabbit;
+import mod.yuzukotomod.entity.kettle.YKEntityKettle;
+import mod.yuzukotomod.entity.kettle.YKRenderKettle;
 import mod.yuzukotomod.entity.model.YKMineCartRenderer;
 import mod.yuzukotomod.event.YKEventBlockBreak;
 import mod.yuzukotomod.event.YKEventEnchantmentChickenPower;
@@ -154,7 +156,20 @@ public class YuzuKotoMod {
         		"ykminecart");
         EntityRegistry.registerModEntity(rl3, YKMineCart.class, 
         		"ykminecart", 2, YuzuKotoMod.INSTANCE, 128, 1, true);
-
+        
+        int mobid = 3;
+        
+        //やかんを登録
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykyakan"),
+        		YKEntityKettle.class, 
+        		"ykyakan",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
           
     }
 	
@@ -230,20 +245,15 @@ public class YuzuKotoMod {
         );
         
         //PurpleDiamondのレシピ
-        /*
         GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
                 Blocks.DIAMOND_BLOCK,
                 Blocks.REDSTONE_BLOCK,
                 Blocks.LAPIS_BLOCK);
-        */
         //ダイヤ＋染料に変更
         GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
                 Items.DIAMOND,
                 new ItemStack(Items.DYE, 1, 5));
         
-        
-        //ツールレシピを削除
-        /*
         //紫ダイヤ剣
         GameRegistry.addRecipe(new ItemStack(YuzuKotoItems.PURPLEDIAMOND_SWORD),
                 "X",
@@ -311,18 +321,13 @@ public class YuzuKotoMod {
                 "X X",
                 'X', YuzuKotoItems.PURPLE_DIAMOND
         );
-        */
         
-        //ダイヤへの変換レシピを削除
-        /*
         //YuzuKotoBlock から PurpleDiamond
         GameRegistry.addSmelting(new ItemStack(YuzuKotoBlocks.YUZUKOTO_BLOCK),
 				new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
 				0.1f);
-        */
         
         //燃料化を無効化
-        /*
         //YuzuKotoBlockは燃料
         GameRegistry.registerFuelHandler(new IFuelHandler(){
 			@Override
@@ -334,12 +339,11 @@ public class YuzuKotoMod {
 				return 0;
 			}
 		});
-		*/
         
         //琴葉ツルハシと紲星クワの修理素材設定
         //修理素材を設定する
         tmPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
-        //amPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
+        amPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
         
         
         //びっくり箱のレシピ
@@ -405,7 +409,7 @@ public class YuzuKotoMod {
         
         MinecraftForge.EVENT_BUS.register(new YKLootTableLoadEvent());
         
-        //MinecraftForge.ORE_GEN_BUS.register(new YKEventOreGen());
+        MinecraftForge.ORE_GEN_BUS.register(new YKEventOreGen());
         
         
         //こっちは新規roottableを追加するためのもの
@@ -899,6 +903,17 @@ public class YuzuKotoMod {
 				@Override
 				public Render<? super YKMineCart> createRenderFor(RenderManager manager) {
 					return new YKMineCartRenderer(manager);
+				}
+    	});
+    	
+    	
+    	//やかん
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKEntityKettle.class, new IRenderFactory<YKEntityKettle>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKEntityKettle> createRenderFor(RenderManager manager) {
+					return new YKRenderKettle(manager);
 				}
     	});
     	
