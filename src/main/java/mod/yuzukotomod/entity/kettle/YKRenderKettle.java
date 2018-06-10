@@ -1,6 +1,8 @@
 package mod.yuzukotomod.entity.kettle;
 
+import mod.yuzukotomod.entity.model.YKMineCartModel;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -19,8 +21,11 @@ public class YKRenderKettle <T extends YKEntityKettle> extends Render<T>{
 	 * 
 	 */
 	private static final ResourceLocation MINECART_TEXTURES = new ResourceLocation("yuzukotomod", 
-    		"textures/entity/ykminecart.png");
+    		"textures/entity/ykminecart1.png");
 	
+    /** モデルのベース */
+    protected ModelBase modelBase = new YKModelKettle();
+    
 	/**
 	 * コンストラクタ
 	 * @param renderManager
@@ -30,7 +35,7 @@ public class YKRenderKettle <T extends YKEntityKettle> extends Render<T>{
 		super(renderManager);
 		
 		//影のサイズ
-		this.shadowSize = 0.5F;
+		//this.shadowSize = 0.5F;
 	}
 
 	@Override
@@ -51,6 +56,11 @@ public class YKRenderKettle <T extends YKEntityKettle> extends Render<T>{
         GlStateManager.translate(x, y, z);
         GlStateManager.scale(1.0F, 1.0F, 1.0F);
         
+        
+        this.modelBase.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
+        
+        /*
+        //ブロックを描画
         this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         
         GlStateManager.pushMatrix();
@@ -59,7 +69,7 @@ public class YKRenderKettle <T extends YKEntityKettle> extends Render<T>{
         		entity.getBrightness(partialTicks));
 
         GlStateManager.popMatrix();
-        
+        */
         
         GlStateManager.popMatrix();
         
