@@ -24,8 +24,8 @@ public class YKEvents {
 	/**
 	 * Entityがダメージを受けたときに発生するイベント
 	 * @param event
+	 * 溶岩炎上は無効化
 	 */
-	@SubscribeEvent
 	public void LivingHurtEvent(LivingHurtEvent event) {
 		
 		//プレイヤーかどうかを確認する
@@ -75,6 +75,7 @@ public class YKEvents {
 	
 	/**
 	 * Entityがダメージを受けたときに発生するイベント
+	 * 砂糖は食べる
 	 * @param event
 	 */
 	@SubscribeEvent
@@ -118,6 +119,7 @@ public class YKEvents {
 	/**
 	 * ブロックを右クリックしたときの処理
 	 * @param event
+	 * ケーキも食べる
 	 */
 	@SubscribeEvent
 	public void PlayerInteractEvent_RightClickBlock(PlayerInteractEvent.RightClickBlock event) {
