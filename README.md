@@ -22,8 +22,8 @@ Releaseで公開しているMODは「結月さんと琴葉ちゃんのForgeで�
 - 古い剣
 
 詳しい内容についてはこちらをご覧下さい。
-![本編](http://www.nicovideo.jp/mylist/60984825)
-![短編集](http://www.nicovideo.jp/mylist/60984874)
+[本編](http://www.nicovideo.jp/mylist/60984825)
+[短編集](http://www.nicovideo.jp/mylist/60984874)
 
 
 ## 注意事項
@@ -37,3 +37,13 @@ Minecraft Forge 1.11.2-13.20.1.2386
 - masterブランチが動画投稿後にコミットしたオリジナルソースとなります。
 - developブランチは試行錯誤用ブランチとなります。
 - releaseブランチが公開用に不要な処理などを取り除いたプログラムとなります。
+
+## 構築手順（Windows/Eclipse）
+1. リポジトリをローカルへ展開（ダウンロード or Git）
+1. コマンドラインで展開した場所へ
+1. gradlew setupDecompWorkspace
+1. gradlew eclipse
+1. 失敗したら gradlew clean 後にやり直す
+1. Eclipseへインポート
+1. 実行構成「Java アプリケーション -> プロジェクト名_Client」を設定すればEclipse上で実行できる
+1. gradlew build でbuild/lib下にjarファイルができあがる
