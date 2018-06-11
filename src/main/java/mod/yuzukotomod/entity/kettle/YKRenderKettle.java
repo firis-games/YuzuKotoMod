@@ -1,13 +1,9 @@
 package mod.yuzukotomod.entity.kettle;
 
-import mod.yuzukotomod.entity.model.YKMineCartModel;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.texture.TextureMap;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -21,7 +17,7 @@ public class YKRenderKettle <T extends YKEntityKettle> extends Render<T>{
 	 * 
 	 */
 	private static final ResourceLocation MINECART_TEXTURES = new ResourceLocation("yuzukotomod", 
-    		"textures/entity/ykminecart1.png");
+    		"textures/entity/ykyakan.png");
 	
     /** モデルのベース */
     protected ModelBase modelBase = new YKModelKettle();

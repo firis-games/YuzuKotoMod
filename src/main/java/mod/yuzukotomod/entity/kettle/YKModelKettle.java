@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class YKModelKettle extends ModelBase {
 
 	//モデル保存
-	public ModelRenderer[] baseModel = new ModelRenderer[5];
+	public ModelRenderer[] baseModel = new ModelRenderer[7];
 	
 	/**
 	 * コンストラクタで形を定義
@@ -26,10 +26,12 @@ public class YKModelKettle extends ModelBase {
 		
 		//形を定義する
 		this.baseModel[0] = new ModelRenderer(this, 0, 0).setTextureSize(64,64);
-		this.baseModel[1] = new ModelRenderer(this, 0, 0).setTextureSize(64,64);
-		this.baseModel[2] = new ModelRenderer(this, 0, 0).setTextureSize(64,64);
-		this.baseModel[3] = new ModelRenderer(this, 0, 0).setTextureSize(64,64);
-		this.baseModel[4] = new ModelRenderer(this, 0, 0).setTextureSize(64,64);
+		this.baseModel[1] = new ModelRenderer(this, 0, 16).setTextureSize(64,64);
+		this.baseModel[2] = new ModelRenderer(this, 0, 20).setTextureSize(64,64);
+		this.baseModel[3] = new ModelRenderer(this, 0, 20).setTextureSize(64,64);
+		this.baseModel[4] = new ModelRenderer(this, 24, 20).setTextureSize(64,64);
+		this.baseModel[5] = new ModelRenderer(this, 0, 25).setTextureSize(64,64);
+		this.baseModel[6] = new ModelRenderer(this, 24, 29).setTextureSize(64,64);
 		
         //形はまだ何も考えない
 		//1ブロックあたりのサイズが16x16x16になってるみたい
@@ -70,6 +72,13 @@ public class YKModelKettle extends ModelBase {
         this.baseModel[4].setRotationPoint(4F + 1F, 12F, 4F + 3.5F);
         this.baseModel[4].rotateAngleZ = (float) (Math.PI * 2 / 360 * (360 - 90));
         
+        //やかんのふた1
+        this.baseModel[5].addBox(0, 0, 0, 6, 1, 6, 0.0F);
+        this.baseModel[5].setRotationPoint(4F + 1F, 8F, 4F + 1F);
+        
+        //やかんのふた2
+        this.baseModel[6].addBox(0, 0, 0, 2, 1, 2, 0.0F);
+        this.baseModel[6].setRotationPoint(4F + 3F, 8F + 1F, 4F + 3F);
         
         //this.baseModel[2].setRotationPoint(2F, 1F, 1F);
         //this.baseModel[2].rotateAngleY = 45.0F;
@@ -86,8 +95,8 @@ public class YKModelKettle extends ModelBase {
     public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale)
     {
 		
-		float rot = (float) (entityIn.getEntityWorld().getTotalWorldTime() % 360) / 360;
-		System.out.println((float) (Math.PI*2* rot));
+		//float rot = (float) (entityIn.getEntityWorld().getTotalWorldTime() % 360) / 360;
+		//System.out.println((float) (Math.PI*2* rot));
 		//this.baseModel[1].rotateAngleZ = (float) (Math.PI*2 * rot);
     	
 		//定義した形を描画
