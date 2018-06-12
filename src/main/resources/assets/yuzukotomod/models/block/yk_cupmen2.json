@@ -1,0 +1,6 @@
+{
+    "parent": "yuzukotomod:block/yk_cupmen_base",
+    "textures": {
+        "all": "minecraft:blocks/gold_block"
+    }
+}
