@@ -3,6 +3,7 @@ package mod.yuzukotomod;
 import mod.yuzukotomod.block.YKBlockChest;
 import mod.yuzukotomod.block.YKLightGlassBlock;
 import mod.yuzukotomod.block.YKMoonEnchantmentTable;
+import mod.yuzukotomod.block.YKNCBlock;
 import mod.yuzukotomod.block.YKTileEntityBlock;
 import mod.yuzukotomod.block.YuzuKotoBlock;
 import mod.yuzukotomod.client.tesr.YKTESRMoonEnchantmentTable;
@@ -405,8 +406,6 @@ public class YuzuKotoMod {
         Blocks.RED_MUSHROOM_BLOCK.setCreativeTab(YuzuKotoCreativeTab);
         Item a = Item.getItemFromBlock(Blocks.RED_MUSHROOM_BLOCK);
         
-        
-        
         MinecraftForge.EVENT_BUS.register(new YKLootTableLoadEvent());
         
         MinecraftForge.ORE_GEN_BUS.register(new YKEventOreGen());
@@ -477,6 +476,8 @@ public class YuzuKotoMod {
     	
     	public final static Item YK_LIGHT_GLASS = null;
     	
+    	public final static Item YK_CUPMEN = null;
+    	
     }
     
     /**
@@ -493,6 +494,8 @@ public class YuzuKotoMod {
     	public final static Block YK_MOON_ENCHANTMENT_TABLE = null;
     	
     	public final static Block YK_LIGHT_GLASS = null;
+    	
+    	public final static Block YK_CUPMEN = null;
     }
     
 
@@ -550,6 +553,16 @@ public class YuzuKotoMod {
                 .setRegistryName(MODID, "yk_light_glass")
                 .setCreativeTab(YuzuKotoCreativeTab)
                 .setUnlocalizedName("yk_light_glass")
+                //.setHardness(0.5F)
+                //.setResistance(1.0F)
+        );
+        
+        //カップめん
+        event.getRegistry().register(
+                new YKNCBlock(Material.CAKE)
+                .setRegistryName(MODID, "yk_cupmen")
+                .setCreativeTab(YuzuKotoCreativeTab)
+                .setUnlocalizedName("yk_cupmen")
                 //.setHardness(0.5F)
                 //.setResistance(1.0F)
         );
@@ -789,6 +802,11 @@ public class YuzuKotoMod {
     			.setRegistryName(MODID, "yk_light_glass")
     	);
     	
+    	//かっぷめん
+    	event.getRegistry().register(new ItemBlock(YuzuKotoBlocks.YK_CUPMEN)
+    			.setRegistryName(MODID, "yk_cupmen")
+    	);
+    	
     	
     	//Blocks.PRISMARINE.setLightLevel(0.5F);
     	//Blocks.GLASS.setLightLevel(0.75F);
@@ -949,6 +967,9 @@ public class YuzuKotoMod {
     			new ModelResourceLocation(YuzuKotoItems.YK_LIGHT_GLASS.getRegistryName(), "inventory"));
     	
     	
+    	//カップめん
+    	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YK_CUPMEN, 0,
+    			new ModelResourceLocation(YuzuKotoItems.YK_CUPMEN.getRegistryName(), "inventory"));
     	
     }
 
