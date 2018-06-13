@@ -13,6 +13,8 @@ import mod.yuzukotomod.entity.YKEntityChicken;
 import mod.yuzukotomod.entity.YKEntityRabbit;
 import mod.yuzukotomod.entity.YKMineCart;
 import mod.yuzukotomod.entity.YKRenderRabbit;
+import mod.yuzukotomod.entity.bath.YKMineCartBath;
+import mod.yuzukotomod.entity.bath.YKRenderMineCartBath;
 import mod.yuzukotomod.entity.kettle.YKEntityKettle;
 import mod.yuzukotomod.entity.kettle.YKRenderKettle;
 import mod.yuzukotomod.entity.model.YKMineCartRenderer;
@@ -57,7 +59,6 @@ import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
-import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
@@ -165,6 +166,19 @@ public class YuzuKotoMod {
         		new ResourceLocation(YuzuKotoMod.MODID, "ykyakan"),
         		YKEntityKettle.class, 
         		"ykyakan",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+        //浴槽マインカート
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykbath"),
+        		YKMineCartBath.class, 
+        		"ykbath",
         		mobid,
         		YuzuKotoMod.INSTANCE,
         		128,
@@ -917,10 +931,20 @@ public class YuzuKotoMod {
     	//マインカート
     	RenderingRegistry.registerEntityRenderingHandler(
     			YKMineCart.class, new IRenderFactory<YKMineCart>() {
-				@SuppressWarnings("unchecked")
+				@SuppressWarnings({ "unchecked", "rawtypes" })
 				@Override
 				public Render<? super YKMineCart> createRenderFor(RenderManager manager) {
 					return new YKMineCartRenderer(manager);
+				}
+    	});
+    	
+    	//マインカート
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKMineCartBath.class, new IRenderFactory<YKMineCartBath>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKMineCartBath> createRenderFor(RenderManager manager) {
+					return new YKRenderMineCartBath(manager);
 				}
     	});
     	

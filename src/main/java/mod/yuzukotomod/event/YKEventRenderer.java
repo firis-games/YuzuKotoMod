@@ -1,5 +1,6 @@
 package mod.yuzukotomod.event;
 
+import mod.yuzukotomod.entity.YKMineCart;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -25,7 +26,7 @@ public class YKEventRenderer {
 		
 		//System.out.println("RenderPlayerEvent");
 		
-		if (event.getEntityPlayer().isRiding()) {
+		if (event.getEntityPlayer().isRiding() && event.getEntityPlayer().getRidingEntity() instanceof YKMineCart) {
 			ReflectionHelper.setPrivateValue(EntityPlayer.class, event.getEntityPlayer(), true, "sleeping", "field_71083_bS");
 			
 			/*
