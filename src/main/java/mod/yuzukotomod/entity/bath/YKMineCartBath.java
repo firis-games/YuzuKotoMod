@@ -7,6 +7,7 @@ import net.minecraft.entity.item.EntityMinecartEmpty;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.world.World;
 
@@ -103,13 +104,31 @@ public class YKMineCartBath extends EntityMinecart {
     
     
     @Override
-    public void onUpdate() {
-    	
-    	super.onUpdate();
-    	
-    	//System.out.println("aaaaaaaaaa");
-    	
+    /**
+     * Called to update the entity's position/logic.
+     */
+    public void onUpdate()
+    {
+        super.onUpdate();
+
+        timer++;
+        
+        /*
+        if (timer > 20) {
+        	timer = 0;
+	        for (int i = 0; i < 5; i++) {
+	            this.world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, 
+	            		this.posX - 1 + (double)((float)rand.nextFloat() * 2) , 
+	            		this.posY + 0.8D, 
+	            		this.posZ - 1 + (double)((float)rand.nextFloat() * 2) , 
+	            		0.0D, 0.3D, 0.0D, new int[0]);        	
+	        }
+        }
+        */
+
     }
+    
+    int timer = 0;
     
     
     /**

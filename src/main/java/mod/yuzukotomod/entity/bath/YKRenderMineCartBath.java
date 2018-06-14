@@ -1,5 +1,8 @@
 package mod.yuzukotomod.entity.bath;
 
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL12;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -104,7 +107,6 @@ public class YKRenderMineCartBath <T extends YKMineCartBath> extends Render<T>{
         //そんざいすれば描画してる
         IBlockState iblockstate = entity.getDisplayTile();
 
-        
         /*
         //ブロックの描画
         GlStateManager.pushMatrix();
@@ -185,9 +187,8 @@ public class YKRenderMineCartBath <T extends YKMineCartBath> extends Render<T>{
     
     protected void renderCartContents2(T p_188319_1_, float partialTicks, IBlockState state)
     {
-        GlStateManager.pushMatrix();
-        IBakedModel ibakedmodel = Minecraft.getMinecraft().getBlockRendererDispatcher().getModelForState(state);
-        Minecraft.getMinecraft().getBlockRendererDispatcher().getBlockModelRenderer().renderModelBrightness(ibakedmodel, state, p_188319_1_.getBrightness(partialTicks), true);
-        GlStateManager.popMatrix();
+    	
+    	//Minecraft.getMinecraft().getBlockRendererDispatcher()
+
     }
 }

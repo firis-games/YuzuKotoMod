@@ -43,10 +43,6 @@ public class YKModelMineCartBath extends ModelBase {
         //this.sideModels[5].addBox(-9.0F, -7.0F, 10.0F, 18, 14, 1, 0.0F);
         this.sideModels[5].setRotationPoint(0.0F, 4.0F, 0.0F);
 
-        /*
-        this.sideModels[6].addBox(-10.0F, -8.0F, -9.0F, 20, 16, 8, 0.0F);
-        this.sideModels[6].setRotationPoint(0.0F, 4.0F, 0.0F);
-        */
         this.sideModels[1].addBox(-8.0F, -9.0F, -1.0F, 16, 8, 2, 0.0F);
         this.sideModels[1].setRotationPoint(-9.0F, 4.0F, 0.0F);
         this.sideModels[2].addBox(-8.0F, -9.0F, -1.0F, 16, 8, 2, 0.0F);
@@ -61,9 +57,15 @@ public class YKModelMineCartBath extends ModelBase {
         this.sideModels[2].rotateAngleY = ((float)Math.PI / 2F);
         this.sideModels[3].rotateAngleY = (float)Math.PI;
         this.sideModels[5].rotateAngleX = -((float)Math.PI / 2F);
+
+
+        //水の部分
+        this.sideModels[6].addBox(-8.0F, -6.0F, -1.0F, 16, 12, 1, 0.0F);
+        this.sideModels[6].setRotationPoint(0.0F, -3.5F, 0.0F);
+        this.sideModels[6].rotateAngleX = ((float)Math.PI / 2F);
         
         
-        this.sideModels[6].rotateAngleX = -((float)Math.PI / 2F);
+        //this.sideModels[6].rotateAngleX = -((float)Math.PI / 2F);
     }
 
     /**
