@@ -18,6 +18,8 @@ import mod.yuzukotomod.entity.bath.YKRenderMineCartBath;
 import mod.yuzukotomod.entity.kettle.YKEntityKettle;
 import mod.yuzukotomod.entity.kettle.YKRenderKettle;
 import mod.yuzukotomod.entity.model.YKMineCartRenderer;
+import mod.yuzukotomod.entity.ykminecart.YKCMinecart;
+import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart;
 import mod.yuzukotomod.event.YKEventBlockBreak;
 import mod.yuzukotomod.event.YKEventEnchantmentChickenPower;
 import mod.yuzukotomod.event.YKEventOreGen;
@@ -179,6 +181,19 @@ public class YuzuKotoMod {
         		new ResourceLocation(YuzuKotoMod.MODID, "ykbath"),
         		YKMineCartBath.class, 
         		"ykbath",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+        //やかんつき
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykfcart"),
+        		YKCMinecart.class, 
+        		"ykfcart",
         		mobid,
         		YuzuKotoMod.INSTANCE,
         		128,
@@ -956,6 +971,17 @@ public class YuzuKotoMod {
 				@Override
 				public Render<? super YKEntityKettle> createRenderFor(RenderManager manager) {
 					return new YKRenderKettle(manager);
+				}
+    	});
+    	
+    	
+    	//やかんつきトロッコ
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKCMinecart.class, new IRenderFactory<YKCMinecart>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKCMinecart> createRenderFor(RenderManager manager) {
+					return new YKCRenderMinecart(manager);
 				}
     	});
     	

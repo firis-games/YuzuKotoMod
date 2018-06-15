@@ -1,27 +1,27 @@
-package mod.yuzukotomod.entity.bath;
+package mod.yuzukotomod.entity.ykminecart;
 
+import mod.yuzukotomod.entity.kettle.YKEntityKettle;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.model.ModelMinecart;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.entity.item.EntityMinecart;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
-public class YKRenderMineCartBath <T extends YKMineCartBath> extends Render<T>{
+public class YKCRenderMinecart <T extends EntityMinecart> extends Render<T> {
 
-	
-	private static final ResourceLocation MINECART_TEXTURES = new ResourceLocation("yuzukotomod", 
-    		"textures/entity/ykbath.png");
-    
+    private static final ResourceLocation MINECART_TEXTURES = new ResourceLocation("textures/entity/minecart.png");
     /** instance of ModelMinecart for rendering */
-    protected ModelBase modelMinecart = new YKModelMineCartBath();
+    protected ModelBase modelMinecart = new ModelMinecart();
 
-    public YKRenderMineCartBath(RenderManager renderManagerIn)
+    public YKCRenderMinecart(RenderManager renderManagerIn)
     {
         super(renderManagerIn);
         this.shadowSize = 0.5F;
@@ -99,61 +99,38 @@ public class YKRenderMineCartBath <T extends YKMineCartBath> extends Render<T>{
             GlStateManager.enableOutlineMode(this.getTeamColor(entity));
         }
 
-        //ここで設定されたブロックを取得して
-        //そんざいすれば描画してる
         IBlockState iblockstate = entity.getDisplayTile();
 
-        /*
-        //ブロックの描画
-        GlStateManager.pushMatrix();
-        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-        GlStateManager.scale(1.0F, 1.0F, 1.0F);
-        GlStateManager.translate(0.0F, 0.15F, 0.0F);
-        this.renderCartContents2(entity, partialTicks, Blocks.WATER.getBlockState().getBaseState());
-        GlStateManager.popMatrix();
-        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-        this.bindEntityTexture(entity);
-        */
-        
-        /* ブロックの描画を一旦ストップ
         if (iblockstate.getRenderType() != EnumBlockRenderType.INVISIBLE)
         {
             GlStateManager.pushMatrix();
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             float f4 = 0.75F;
-            //GlStateManager.scale(0.75F, 0.75F, 0.75F);
-            
-            GlStateManager.scale(1.0F, 1.0F, 1.0F);
-            //GlStateManager.translate(-0.5F, (float)(j - 8) / 16.0F, 0.5F);
-            //this.renderCartContents(entity, partialTicks, iblockstate);
-
-            GlStateManager.translate(0.0F, 0.15F, 0.0F);
-            
-            //いっこめ
-            GlStateManager.translate(-1F, 0.0F, 0.5F);
-            this.renderCartContents(entity, partialTicks, Blocks.BED.getBlockState()
-        			.getBaseState()
-        			.withProperty(BlockBed.PART, BlockBed.EnumPartType.HEAD)
-        			.withProperty(BlockBed.OCCUPIED, Boolean.valueOf(false)));
-            
-            //にこめ(たぶんベッドのおしり) 
-            //X軸だけずらす
-            GlStateManager.translate(1F, 0.0F, 0.0F);
-            this.renderCartContents(entity, partialTicks, Blocks.BED.getBlockState()
-        			.getBaseState()
-        			.withProperty(BlockBed.PART, BlockBed.EnumPartType.FOOT)
-        			.withProperty(BlockBed.OCCUPIED, Boolean.valueOf(false)));
-            
+            GlStateManager.scale(0.75F, 0.75F, 0.75F);
+            GlStateManager.translate(-0.5F, (float)(j - 8) / 16.0F, 0.5F);
+            this.renderCartContents(entity, partialTicks, iblockstate);
             GlStateManager.popMatrix();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
-            
-            
             this.bindEntityTexture(entity);
+            
+            
+            //ここにやかんを描画する
+            //Entityをレンダリング
+        	//Mobの拡大率
+            GlStateManager.pushMatrix();
+        	GlStateManager.scale(0.75F, 0.75F, 0.75F);
+        	GlStateManager.translate(0.0F - (0.5F), (float)(j - 8) / 16.0F + 1.0F, 0.0F - 0.5F);
+        	YKEntityKettle kettle = new YKEntityKettle(entity.getEntityWorld());
+            Minecraft.getMinecraft().getRenderManager().doRenderEntity(kettle, 0.0D, 0.0D, 0.0D, 0.0F, partialTicks, false);
+            
+            //元に戻す
+            GlStateManager.popMatrix();
+            GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+            this.bindEntityTexture(entity);
+            
         }
-        */
 
-        //GlStateManager.scale(-1.0F, -1.0F, 1.0F);
-        GlStateManager.scale(-1.5F, -1.0F, 1.0F);
+        GlStateManager.scale(-1.0F, -1.0F, 1.0F);
         this.modelMinecart.render(entity, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F, 0.0625F);
         GlStateManager.popMatrix();
 
@@ -180,15 +157,5 @@ public class YKRenderMineCartBath <T extends YKMineCartBath> extends Render<T>{
         Minecraft.getMinecraft().getBlockRendererDispatcher().renderBlockBrightness(p_188319_3_, p_188319_1_.getBrightness(partialTicks));
         GlStateManager.popMatrix();
     }
-    
-    protected void renderCartContents2(T p_188319_1_, float partialTicks, IBlockState state)
-    {
-    	
-    	//Minecraft.getMinecraft().getBlockRendererDispatcher()
 
-    }
-    
-    protected void testRender() {
-    	        
-    }
 }
