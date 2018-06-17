@@ -159,9 +159,9 @@ public class YuzuKotoMod {
     	//マインカートの設定
         //モブの登録だけどうまくできない
         ResourceLocation rl3 = new ResourceLocation(YuzuKotoMod.MODID,
-        		"ykminecart");
+        		"ykcartbed");
         EntityRegistry.registerModEntity(rl3, YKMineCart.class, 
-        		"ykminecart", 2, YuzuKotoMod.INSTANCE, 128, 1, true);
+        		"ykcartbed", 2, YuzuKotoMod.INSTANCE, 128, 1, true);
         
         int mobid = 3;
         
@@ -180,9 +180,9 @@ public class YuzuKotoMod {
         //浴槽マインカート
         mobid = mobid + 1;
         EntityRegistry.registerModEntity(
-        		new ResourceLocation(YuzuKotoMod.MODID, "ykbath"),
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartbath"),
         		YKMineCartBath.class, 
-        		"ykbath",
+        		"ykcartbath",
         		mobid,
         		YuzuKotoMod.INSTANCE,
         		128,
@@ -193,9 +193,9 @@ public class YuzuKotoMod {
         //やかんつき
         mobid = mobid + 1;
         EntityRegistry.registerModEntity(
-        		new ResourceLocation(YuzuKotoMod.MODID, "ykfcart"),
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartyakan"),
         		YKCMinecart.class, 
-        		"ykfcart",
+        		"ykcartyakan",
         		mobid,
         		YuzuKotoMod.INSTANCE,
         		128,
@@ -206,9 +206,9 @@ public class YuzuKotoMod {
         //カップ麺つき
         mobid = mobid + 1;
         EntityRegistry.registerModEntity(
-        		new ResourceLocation(YuzuKotoMod.MODID, "ykfcart2"),
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartcupmen"),
         		YKCMinecart2.class, 
-        		"ykfcart2",
+        		"ykcartcupmen",
         		mobid,
         		YuzuKotoMod.INSTANCE,
         		128,
