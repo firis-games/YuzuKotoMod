@@ -4,7 +4,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPrismarine;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +18,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -38,7 +37,8 @@ public class YKItemTest extends Item {
     {
 
 		//return onItemUse_loottables2(player, worldIn, pos, hand, facing, hitZ, hitZ, hitZ);
-		return onItemUse_createBlock(player, worldIn, pos, hand, facing, hitZ, hitZ, hitZ);
+		//return onItemUse_createBlock(player, worldIn, pos, hand, facing, hitZ, hitZ, hitZ);
+		return onItemUse_createBlock2(player, worldIn, pos, hand, facing, hitZ, hitZ, hitZ);
     }
 	
 	public EnumActionResult onItemUse_createBlock(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
@@ -109,6 +109,83 @@ public class YKItemTest extends Item {
 		//北と南に7マス設置？
 		
 		
+		
+		return EnumActionResult.SUCCESS; 
+	}
+	
+	
+	/***
+	 * 通常線路用
+	 * @param player
+	 * @param world
+	 * @param pos
+	 * @param hand
+	 * @param facing
+	 * @param hitX
+	 * @param hitY
+	 * @param hitZ
+	 * @return
+	 */
+	public EnumActionResult onItemUse_createBlock2(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) 
+	{
+		
+		//クリックしたブロックを基点に設置していく
+		IBlockState istateBase = Blocks.STONE.getStateFromMeta(BlockStone.EnumType.ANDESITE_SMOOTH.getMetadata());
+		IBlockState istateAir = Blocks.AIR.getDefaultState();
+		IBlockState istateRail = Blocks.RAIL.getDefaultState();
+		
+		IBlockState istateLantern = Blocks.SEA_LANTERN.getDefaultState();
+				
+		BlockPos basePos = pos;
+		for (int row = 0; row < 200; row++) {
+			
+			//ベースの線路
+			for (int i = 0; i < 18; i++) {
+				
+				//設置していくベース
+				world.setBlockState(basePos, istateBase);
+				world.setBlockState(basePos.north(1), istateBase);
+				world.setBlockState(basePos.south(1), istateBase);
+				
+				//真ん中はランタン
+				if (i == 8) {
+					world.setBlockState(basePos.north(1), istateLantern);
+					world.setBlockState(basePos.south(1), istateLantern);
+				}
+				
+				//ベースの上の空間を空気と置き換え
+				int airTop = 10;
+				for (int idx = 1; idx < airTop; idx++) {
+					world.setBlockState(basePos.north(1).up(idx), istateAir);
+					world.setBlockState(basePos.south(1).up(idx), istateAir);
+					world.setBlockState(basePos.up(idx), istateAir);
+				}
+				
+				//線路を設置
+				//線路
+				world.setBlockState(basePos.up(1), istateRail);
+				
+				basePos = basePos.west();
+				
+			}
+			
+			//一回位置を戻す
+			basePos = basePos.east();
+			
+			//1セット分に1回は柱を生成
+			world.setBlockState(basePos.north(1), istateLantern);
+			world.setBlockState(basePos.south(1), istateLantern);
+			
+			for (int i = 0; i < pos.getY() - 5; i++) {
+				world.setBlockState(basePos.down(i), istateBase);
+				
+				if ((i % 6) == 5) {
+					world.setBlockState(basePos.down(i), istateLantern);
+				}
+			}
+			
+			basePos = basePos.west();
+		}
 		
 		return EnumActionResult.SUCCESS; 
 	}

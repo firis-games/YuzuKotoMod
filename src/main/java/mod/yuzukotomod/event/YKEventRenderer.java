@@ -21,7 +21,7 @@ public class YKEventRenderer {
 	 * @param event
 	 */
 	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
+	//@SubscribeEvent
 	public void YKEventRendererRenderPlayerEventPre(net.minecraftforge.client.event.RenderPlayerEvent.Pre event) {
 		
 		//System.out.println("RenderPlayerEvent");
