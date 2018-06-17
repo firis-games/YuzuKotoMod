@@ -20,8 +20,10 @@ import mod.yuzukotomod.entity.kettle.YKRenderKettle;
 import mod.yuzukotomod.entity.model.YKMineCartRenderer;
 import mod.yuzukotomod.entity.ykminecart.YKCMinecart;
 import mod.yuzukotomod.entity.ykminecart.YKCMinecart2;
+import mod.yuzukotomod.entity.ykminecart.YKCMinecart3;
 import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart;
 import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart2;
+import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart3;
 import mod.yuzukotomod.event.YKEventBlockBreak;
 import mod.yuzukotomod.event.YKEventEnchantmentChickenPower;
 import mod.yuzukotomod.event.YKEventOreGen;
@@ -209,6 +211,19 @@ public class YuzuKotoMod {
         		new ResourceLocation(YuzuKotoMod.MODID, "ykcartcupmen"),
         		YKCMinecart2.class, 
         		"ykcartcupmen",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+      //カップ麺つき
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartchest"),
+        		YKCMinecart3.class, 
+        		"ykcartchest",
         		mobid,
         		YuzuKotoMod.INSTANCE,
         		128,
@@ -1009,6 +1024,18 @@ public class YuzuKotoMod {
 					return new YKCRenderMinecart2(manager);
 				}
     	});
+    	
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKCMinecart3.class, new IRenderFactory<YKCMinecart3>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKCMinecart3> createRenderFor(RenderManager manager) {
+					return new YKCRenderMinecart3(manager);
+				}
+    	});
+    	
+    	
+    	
     	
     	
     	// アイテムのモデルを登録する
