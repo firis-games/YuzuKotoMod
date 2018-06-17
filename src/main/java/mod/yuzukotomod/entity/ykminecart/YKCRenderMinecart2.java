@@ -117,6 +117,8 @@ public class YKCRenderMinecart2 <T extends EntityMinecart> extends Render<T> {
             GlStateManager.pushMatrix();
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             GlStateManager.scale(0.75F, 0.75F, 0.75F);
+            //90度回転
+            GlStateManager.rotate(90, 0.0F, 1.0F, 0.0F);
             GlStateManager.translate(-0.5F, (float)(j - 8) / 16.0F + 1F, 0.5F);
             this.renderCartContents(entity, partialTicks, YuzuKotoBlocks.YK_CUPMEN.getDefaultState());
 

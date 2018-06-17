@@ -106,8 +106,15 @@ public class YKCRenderMinecart <T extends EntityMinecart> extends Render<T> {
             GlStateManager.pushMatrix();
             this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
             float f4 = 0.75F;
+            
+            //90度回転
+            GlStateManager.rotate(90, 0.0F, 1.0F, 0.0F);
+            
             GlStateManager.scale(0.75F, 0.75F, 0.75F);
             GlStateManager.translate(-0.5F, (float)(j - 8) / 16.0F, 0.5F);
+            
+
+            
             this.renderCartContents(entity, partialTicks, iblockstate);
             GlStateManager.popMatrix();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
