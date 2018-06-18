@@ -137,7 +137,7 @@ public class YKItemTest extends Item {
 		IBlockState istateLantern = Blocks.SEA_LANTERN.getDefaultState();
 				
 		BlockPos basePos = pos;
-		for (int row = 0; row < 200; row++) {
+		for (int row = 0; row < 50; row++) {
 			
 			//ベースの線路
 			for (int i = 0; i < 18; i++) {
@@ -151,6 +151,10 @@ public class YKItemTest extends Item {
 				if (i == 8) {
 					world.setBlockState(basePos.north(1), istateLantern);
 					world.setBlockState(basePos.south(1), istateLantern);
+					
+					world.notifyBlockUpdate(basePos.south(1), Blocks.AIR.getDefaultState(), istateLantern, 3);
+					world.notifyBlockUpdate(basePos.south(1), Blocks.AIR.getDefaultState(), istateLantern, 3);
+	            	
 				}
 				
 				//ベースの上の空間を空気と置き換え
@@ -176,11 +180,13 @@ public class YKItemTest extends Item {
 			world.setBlockState(basePos.north(1), istateLantern);
 			world.setBlockState(basePos.south(1), istateLantern);
 			
-			for (int i = 0; i < pos.getY() - 5; i++) {
+			for (int i = 0; i < pos.getY() - 1; i++) {
 				world.setBlockState(basePos.down(i), istateBase);
 				
 				if ((i % 6) == 5) {
 					world.setBlockState(basePos.down(i), istateLantern);
+					world.notifyBlockUpdate(pos, Blocks.AIR.getDefaultState(), istateLantern, 3);
+	            	
 				}
 			}
 			

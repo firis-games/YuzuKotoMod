@@ -127,7 +127,9 @@ public class YKMineCart extends EntityMinecart {
     	//マインカートだと0にされてるみたい
     	//return super.getMountedYOffset();
         //return (double)this.height * 0.25D;
-        return 0.5D;
+        //return 0.5D;
+    	//リトルメイド用の少し下げる
+        return 0.4D;
     }
     
     @Override
