@@ -4,6 +4,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartEmpty;
+import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumHand;
@@ -11,7 +12,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.world.World;
 
-public class YKMineCartBath extends EntityMinecart {
+public class YKMineCartBath extends EntityMinecartFurnace {
 	
     public YKMineCartBath(World worldIn)
     {
@@ -23,6 +24,8 @@ public class YKMineCartBath extends EntityMinecart {
         this.setSize(1.75F, 0.75F);
         
     }
+    
+    
 
     public YKMineCartBath(World worldIn, double x, double y, double z)
     {
@@ -35,8 +38,13 @@ public class YKMineCartBath extends EntityMinecart {
         EntityMinecart.registerFixesMinecart(fixer, EntityMinecartEmpty.class);
     }
 
+    @Override
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
     {
+    	
+    	//燃料部分の処理を動かす
+    	super.processInitialInteract(player, hand);
+    	
         if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
 
         if (player.isSneaking())
@@ -101,7 +109,6 @@ public class YKMineCartBath extends EntityMinecart {
     {
         return EntityMinecart.Type.RIDEABLE;
     }
-    
     
     @Override
     /**
