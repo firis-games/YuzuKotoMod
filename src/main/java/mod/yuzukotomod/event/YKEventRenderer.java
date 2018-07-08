@@ -1,7 +1,11 @@
 package mod.yuzukotomod.event;
 
+import mod.yuzukotomod.entity.YKMineCart;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -24,12 +28,12 @@ public class YKEventRenderer {
 	 * @param event
 	 */
 	@SideOnly(Side.CLIENT)
-	@SubscribeEvent
+	//@SubscribeEvent
 	public void YKEventRendererRenderPlayerEventPre(net.minecraftforge.client.event.RenderPlayerEvent.Pre event) {
 		
 		//System.out.println("RenderPlayerEvent");
 		
-		if (event.getEntityPlayer().isRiding()) {
+		if (event.getEntityPlayer().isRiding() && event.getEntityPlayer().getRidingEntity() instanceof YKMineCart) {
 			ReflectionHelper.setPrivateValue(EntityPlayer.class, event.getEntityPlayer(), true, "sleeping", "field_71083_bS");
 			
 			/*

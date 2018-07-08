@@ -1,24 +1,20 @@
-package mod.yuzukotomod.entity;
+package mod.yuzukotomod.entity.bath;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockBed;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityMinecartEmpty;
+import net.minecraft.entity.item.EntityMinecartFurnace;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.SPacketUseBed;
-import net.minecraft.stats.StatList;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.world.World;
 
-public class YKMineCart extends EntityMinecart {
+public class YKMineCartBath extends EntityMinecartFurnace {
 	
-    public YKMineCart(World worldIn)
+    public YKMineCartBath(World worldIn)
     {
         super(worldIn);
         
@@ -28,8 +24,10 @@ public class YKMineCart extends EntityMinecart {
         this.setSize(1.75F, 0.75F);
         
     }
+    
+    
 
-    public YKMineCart(World worldIn, double x, double y, double z)
+    public YKMineCartBath(World worldIn, double x, double y, double z)
     {
         super(worldIn, x, y, z);
         
@@ -40,8 +38,13 @@ public class YKMineCart extends EntityMinecart {
         EntityMinecart.registerFixesMinecart(fixer, EntityMinecartEmpty.class);
     }
 
+    @Override
     public boolean processInitialInteract(EntityPlayer player, EnumHand hand)
     {
+    	
+    	//燃料部分の処理を動かす
+    	super.processInitialInteract(player, hand);
+    	
         if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.minecart.MinecartInteractEvent(this, player, hand))) return true;
 
         if (player.isSneaking())
@@ -107,15 +110,32 @@ public class YKMineCart extends EntityMinecart {
         return EntityMinecart.Type.RIDEABLE;
     }
     
-    
     @Override
-    public void onUpdate() {
-    	
-    	super.onUpdate();
-    	
-    	//System.out.println("aaaaaaaaaa");
-    	
+    /**
+     * Called to update the entity's position/logic.
+     */
+    public void onUpdate()
+    {
+        super.onUpdate();
+
+        timer++;
+        
+        /*
+        if (timer > 20) {
+        	timer = 0;
+	        for (int i = 0; i < 5; i++) {
+	            this.world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, 
+	            		this.posX - 1 + (double)((float)rand.nextFloat() * 2) , 
+	            		this.posY + 0.8D, 
+	            		this.posZ - 1 + (double)((float)rand.nextFloat() * 2) , 
+	            		0.0D, 0.3D, 0.0D, new int[0]);        	
+	        }
+        }
+        */
+
     }
+    
+    int timer = 0;
     
     
     /**
@@ -127,9 +147,7 @@ public class YKMineCart extends EntityMinecart {
     	//マインカートだと0にされてるみたい
     	//return super.getMountedYOffset();
         //return (double)this.height * 0.25D;
-        //return 0.5D;
-    	//リトルメイド用の少し下げる
-        return 0.4D;
+        return 0.0D;
     }
     
     @Override
@@ -143,5 +161,5 @@ public class YKMineCart extends EntityMinecart {
     			.withProperty(BlockBed.PART, BlockBed.EnumPartType.HEAD)
     			.withProperty(BlockBed.OCCUPIED, Boolean.valueOf(false));
     }
-
+	
 }

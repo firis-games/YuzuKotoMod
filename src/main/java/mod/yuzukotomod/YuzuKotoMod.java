@@ -1,6 +1,10 @@
 package mod.yuzukotomod;
 
+import mod.yuzukotomod.block.YKBlockChest;
+import mod.yuzukotomod.block.YKLightGlassBlock;
 import mod.yuzukotomod.block.YKMoonEnchantmentTable;
+import mod.yuzukotomod.block.YKNCBlock;
+import mod.yuzukotomod.block.YKTileEntityBlock;
 import mod.yuzukotomod.block.YuzuKotoBlock;
 import mod.yuzukotomod.client.tesr.YKTESRMoonEnchantmentTable;
 import mod.yuzukotomod.enchantment.YKEnchantmentChickenPower;
@@ -9,18 +13,38 @@ import mod.yuzukotomod.entity.YKEntityChicken;
 import mod.yuzukotomod.entity.YKEntityRabbit;
 import mod.yuzukotomod.entity.YKMineCart;
 import mod.yuzukotomod.entity.YKRenderRabbit;
+import mod.yuzukotomod.entity.bath.YKMineCartBath;
+import mod.yuzukotomod.entity.bath.YKRenderMineCartBath;
+import mod.yuzukotomod.entity.kettle.YKEntityKettle;
+import mod.yuzukotomod.entity.kettle.YKRenderKettle;
+import mod.yuzukotomod.entity.model.YKMineCartRenderer;
+import mod.yuzukotomod.entity.ykminecart.YKCMinecart;
+import mod.yuzukotomod.entity.ykminecart.YKCMinecart2;
+import mod.yuzukotomod.entity.ykminecart.YKCMinecart3;
+import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart;
+import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart2;
+import mod.yuzukotomod.entity.ykminecart.YKCRenderMinecart3;
 import mod.yuzukotomod.event.YKEventBlockBreak;
 import mod.yuzukotomod.event.YKEventEnchantmentChickenPower;
+import mod.yuzukotomod.event.YKEventOreGen;
+import mod.yuzukotomod.event.YKEventRenderer;
 import mod.yuzukotomod.event.YKEventShieldSword;
 import mod.yuzukotomod.event.YKEventTest;
 import mod.yuzukotomod.event.YKEvents;
 import mod.yuzukotomod.event.YKLootTableLoadEvent;
 import mod.yuzukotomod.gui.YKGuiHandler;
+import mod.yuzukotomod.item.YKItemAxe;
 import mod.yuzukotomod.item.YKItemHoe;
 import mod.yuzukotomod.item.YKItemLuckBox;
+import mod.yuzukotomod.item.YKItemMushroom;
 import mod.yuzukotomod.item.YKItemPickaxe;
+import mod.yuzukotomod.item.YKItemSword;
+import mod.yuzukotomod.item.YKItemTest;
 import mod.yuzukotomod.item.YKItemVanillaSword;
 import mod.yuzukotomod.tileentity.YKTEMoonEnchantmentTable;
+import mod.yuzukotomod.tileentity.YKTileEntity;
+import mod.yuzukotomod.tileentity.YKTileEntityChest;
+import mod.yuzukotomod.tileentity.YKTileEntitySpRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -30,15 +54,20 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemSpade;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.RegistryEvent;
@@ -46,6 +75,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.common.IFuelHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -118,34 +148,99 @@ public class YuzuKotoMod {
         YKEnchantmentChickenPower encCP = new YKEnchantmentChickenPower();
         GameRegistry.register(encCP, new ResourceLocation(MODID,"chicken_power"));
         
-        /* テストコードを削除
     	//TileEntityを登録する
     	GameRegistry.registerTileEntity(YKTileEntity.class, "yktile_entity");
     	
+    	
     	//TileEntityを登録する
     	GameRegistry.registerTileEntity(YKTileEntityChest.class, "ykte_chest");
-    	*/
+    	
     	
     	GameRegistry.registerTileEntity(YKTEMoonEnchantmentTable.class, "ykte_moon_enchantment_table");
     	
     	//マインカートの設定
         //モブの登録だけどうまくできない
         ResourceLocation rl3 = new ResourceLocation(YuzuKotoMod.MODID,
-        		"ykminecart");
+        		"ykcartbed");
         EntityRegistry.registerModEntity(rl3, YKMineCart.class, 
-        		"ykminecart", 2, YuzuKotoMod.INSTANCE, 128, 1, true);
-
+        		"ykcartbed", 2, YuzuKotoMod.INSTANCE, 128, 1, true);
+        
+        int mobid = 3;
+        
+        //やかんを登録
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykyakan"),
+        		YKEntityKettle.class, 
+        		"ykyakan",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+        //浴槽マインカート
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartbath"),
+        		YKMineCartBath.class, 
+        		"ykcartbath",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+        //やかんつき
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartyakan"),
+        		YKCMinecart.class, 
+        		"ykcartyakan",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+        //カップ麺つき
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartcupmen"),
+        		YKCMinecart2.class, 
+        		"ykcartcupmen",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
+        
+      //カップ麺つき
+        mobid = mobid + 1;
+        EntityRegistry.registerModEntity(
+        		new ResourceLocation(YuzuKotoMod.MODID, "ykcartchest"),
+        		YKCMinecart3.class, 
+        		"ykcartchest",
+        		mobid,
+        		YuzuKotoMod.INSTANCE,
+        		128,
+        		1,
+        		true
+        );
           
     }
 	
 	
 	/**
-	 * 無効化しているので呼び出されない
+	 * 無効化している
 	 * @param event
 	 */
     public void preInit1(FMLPreInitializationEvent event) {
 		//ログだけ出力
-        //System.out.println("preInit");
+        System.out.println("preInit");
         
         //Entityを設定する
         //コメントにpreinitで呼べってかいてた
@@ -196,13 +291,9 @@ public class YuzuKotoMod {
         
     }
 
-    /**
-     * Init処理
-     * @param event
-     */
 	@EventHandler
     public void init(FMLInitializationEvent event) {
-        //System.out.println("init");
+        System.out.println("init");
         
         //YuzuKotoBlockのレシピ
         GameRegistry.addRecipe(new ItemStack(YuzuKotoBlocks.YUZUKOTO_BLOCK),
@@ -214,21 +305,15 @@ public class YuzuKotoMod {
         );
         
         //PurpleDiamondのレシピ
-        /*
         GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
                 Blocks.DIAMOND_BLOCK,
                 Blocks.REDSTONE_BLOCK,
                 Blocks.LAPIS_BLOCK);
-        */
         //ダイヤ＋染料に変更
         GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
                 Items.DIAMOND,
                 new ItemStack(Items.DYE, 1, 5));
         
-        
-        //ツールレシピを削除
-        //内部的に琴葉ツルハシと紲星のクワが紫ツール
-        /*
         //紫ダイヤ剣
         GameRegistry.addRecipe(new ItemStack(YuzuKotoItems.PURPLEDIAMOND_SWORD),
                 "X",
@@ -296,18 +381,13 @@ public class YuzuKotoMod {
                 "X X",
                 'X', YuzuKotoItems.PURPLE_DIAMOND
         );
-        */
         
-        //ダイヤへの変換レシピを削除
-        /*
         //YuzuKotoBlock から PurpleDiamond
         GameRegistry.addSmelting(new ItemStack(YuzuKotoBlocks.YUZUKOTO_BLOCK),
 				new ItemStack(YuzuKotoItems.PURPLE_DIAMOND),
 				0.1f);
-        */
         
         //燃料化を無効化
-        /*
         //YuzuKotoBlockは燃料
         GameRegistry.registerFuelHandler(new IFuelHandler(){
 			@Override
@@ -319,12 +399,11 @@ public class YuzuKotoMod {
 				return 0;
 			}
 		});
-		*/
         
         //琴葉ツルハシと紲星クワの修理素材設定
         //修理素材を設定する
         tmPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
-        //amPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
+        amPurpleDiamond.setRepairItem(new ItemStack(YuzuKotoItems.PURPLE_DIAMOND));
         
         
         //びっくり箱のレシピ
@@ -342,98 +421,60 @@ public class YuzuKotoMod {
                 new ItemStack(Items.DYE, 1, 14));
         
         
-        //古い剣系のレシピを追加
-        GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.VANILLA_WOOD_SWORD),
-                Items.WOODEN_SWORD,
-                Items.STICK, Items.WOODEN_AXE);
-        GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.VANILLA_STONE_SWORD),
-                Items.STONE_SWORD,
-                Items.STICK, Items.STONE_AXE);
-        GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.VANILLA_IRON_SWORD),
-                Items.IRON_SWORD,
-                Items.STICK, Items.IRON_AXE);
-        GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.VANILLA_GOLD_SWORD),
-                Items.GOLDEN_SWORD,
-                Items.STICK, Items.IRON_AXE);
-        GameRegistry.addShapelessRecipe(new ItemStack(YuzuKotoItems.VANILLA_DIAMOND_SWORD),
-                Items.DIAMOND_SWORD,
-                Items.STICK, Items.IRON_AXE);
-        
-        
-        //結月の祭壇のレシピを追加
-        GameRegistry.addRecipe(new ItemStack(YuzuKotoBlocks.YK_MOON_ENCHANTMENT_TABLE),
-                " Z ",
-                "VYV",
-                " X ",
-                'X', Blocks.ENCHANTING_TABLE,
-                'Y', new ItemStack(Blocks.WOOL, 1, 10),
-                'Z', YuzuKotoItems.PURPLE_DIAMOND,
-                'V', Blocks.GOLD_BLOCK
-        );
-        
         //GUIの登録
         NetworkRegistry.INSTANCE.registerGuiHandler(YuzuKotoMod.INSTANCE, new YKGuiHandler());
     }
     
-	/**
-	 * Post
-	 * @param event
-	 */
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
 
     	//ログだけ出力
-        //System.out.println("postInit");
+        System.out.println("postInit");
         
         //マグマと炎上無効化イベントを登録
         MinecraftForge.EVENT_BUS.register(new YKEvents());
-
-        /*
         
         //鉱石生成イベントを登録
         MinecraftForge.ORE_GEN_BUS.register(new YKEventOreGen());
-        */
+        
         
         //エンチャントイベントの登録
         MinecraftForge.EVENT_BUS.register(new YKEventEnchantmentChickenPower());
 
+        
+        //テスト用
         //旧バニラ剣用
         MinecraftForge.EVENT_BUS.register(new YKEventShieldSword());
         
         //くわの一括破壊イベント
         MinecraftForge.EVENT_BUS.register(new YKEventBlockBreak());
         
-        //寝台トロッコ用の描画イベント、無効化
-        /*
+        
+        
+        
         //描画のイベント
         MinecraftForge.EVENT_BUS.register(new YKEventRenderer());
-        */
         
-        //ボーナスチェスト追加用
-        MinecraftForge.EVENT_BUS.register(new YKLootTableLoadEvent());
+        
 
     }
     
-    /**
-     *　metaデータブロック検証用と
-     * Loot Tableの動画用ロジック無効化
-     * @param event
-     */
+    @EventHandler
     public void postInit1(FMLPostInitializationEvent event) {
     	
         Blocks.RED_MUSHROOM_BLOCK.setCreativeTab(YuzuKotoCreativeTab);
-        //Item a = Item.getItemFromBlock(Blocks.RED_MUSHROOM_BLOCK);
-        
-        
+        Item a = Item.getItemFromBlock(Blocks.RED_MUSHROOM_BLOCK);
         
         MinecraftForge.EVENT_BUS.register(new YKLootTableLoadEvent());
         
-        //MinecraftForge.ORE_GEN_BUS.register(new YKEventOreGen());
+        MinecraftForge.ORE_GEN_BUS.register(new YKEventOreGen());
         
         
         //こっちは新規roottableを追加するためのもの
         //既存の切り替えはやっぱりeventsのほうでやらないといけない
         //LootTableList.register(new ResourceLocation(YuzuKotoMod.MODID, "yuzukotomod:chests/spawn_bonus_chest"));
+        
+        
         
         Blocks.MYCELIUM.setCreativeTab(YuzuKotoCreativeTab);
 		//ログだけ出力
@@ -494,6 +535,8 @@ public class YuzuKotoMod {
     	
     	public final static Item YK_LIGHT_GLASS = null;
     	
+    	public final static Item YK_CUPMEN = null;
+    	
     }
     
     /**
@@ -510,6 +553,8 @@ public class YuzuKotoMod {
     	public final static Block YK_MOON_ENCHANTMENT_TABLE = null;
     	
     	public final static Block YK_LIGHT_GLASS = null;
+    	
+    	public final static Block YK_CUPMEN = null;
     }
     
 
@@ -520,7 +565,6 @@ public class YuzuKotoMod {
     protected static void registerBlocks(RegistryEvent.Register<Block> event) {
 
     	//　ブロックを登録する
-    	//ゆづことブロック
         event.getRegistry().register(
 //                new YuzuKotoBlock(Material.ROCK)
                 new YuzuKotoBlock(Material.IRON)
@@ -531,9 +575,8 @@ public class YuzuKotoMod {
                 .setResistance(2000.0F)
         );
         
-        //動画用ブロック
-        /*
-        //　ブロックを登録する
+        
+     //　ブロックを登録する
         event.getRegistry().register(
                 new YKTileEntityBlock()
                 .setRegistryName(MODID, "ykte_block")
@@ -543,7 +586,7 @@ public class YuzuKotoMod {
                 .setResistance(1.0F)
         );
         
-        //　ブロックを登録する
+     //　ブロックを登録する
         event.getRegistry().register(
                 new YKBlockChest()
                 .setRegistryName(MODID, "ykblock_chest")
@@ -552,9 +595,8 @@ public class YuzuKotoMod {
                 .setHardness(0.5F)
                 .setResistance(1.0F)
         );
-        */
         
-        //　結月の祭壇
+     //　ブロックを登録する
         event.getRegistry().register(
                 new YKMoonEnchantmentTable()
                 .setRegistryName(MODID, "yk_moon_enchantment_table")
@@ -564,9 +606,6 @@ public class YuzuKotoMod {
                 .setResistance(1.0F)
         );
         
-        //寝台トロッコ用の装飾ブロック
-        //つかわなかった
-        /*
         //光るガラス
         event.getRegistry().register(
                 new YKLightGlassBlock()
@@ -576,7 +615,17 @@ public class YuzuKotoMod {
                 //.setHardness(0.5F)
                 //.setResistance(1.0F)
         );
-        */
+        
+        //カップめん
+        event.getRegistry().register(
+                new YKNCBlock(Material.CAKE)
+                .setRegistryName(MODID, "yk_cupmen")
+                .setCreativeTab(YuzuKotoCreativeTab)
+                .setUnlocalizedName("yk_cupmen")
+                //.setHardness(0.5F)
+                //.setResistance(1.0F)
+        );
+        
     }
     
     public static ToolMaterial tmPurpleDiamond;
@@ -590,18 +639,18 @@ public class YuzuKotoMod {
     @SubscribeEvent
     protected static void registerItems(RegistryEvent.Register<Item> event){
     	
-    	//きのこ検証用
-    	/*
     	event.getRegistry().register(new YKItemMushroom()
     			.setRegistryName(MODID, "yk_red_mushroom")
     			.setUnlocalizedName("yk_red_mushroom")
     			.setCreativeTab(YuzuKotoCreativeTab)
     	);
-    	*/
     	
+    	
+    	
+    	
+
     	// アイテムを登録する
-    	// 紫ダイヤ
-    	event.getRegistry().register(new Item()
+    	event.getRegistry().register(new YKItemTest()
     			.setRegistryName(MODID, "purple_diamond")
     			.setUnlocalizedName("purple_diamond")
     			.setCreativeTab(YuzuKotoCreativeTab)
@@ -614,18 +663,15 @@ public class YuzuKotoMod {
     	
     	//ツールマテリアル設定
     	//採掘レベル/耐久値/ブロック破壊速度/攻撃力/エンチャント補正
-    	//ダイヤツールと同じ補正
     	//tmPurpleDiamond = EnumHelper.addToolMaterial("PURPLE_DIAMOND", 3, 59, 8.0F, 3.0F, 22);
     	tmPurpleDiamond = EnumHelper.addToolMaterial("PURPLE_DIAMOND", 3, 1561, 8.0F, 3.0F, 22);
     	
-    	/*
     	//パープルダイヤ剣
     	event.getRegistry().register(new YKItemSword(tmPurpleDiamond)
     			.setRegistryName(MODID, "purplediamond_sword")
     			.setUnlocalizedName("purplediamond_sword")
     			.setCreativeTab(YuzuKotoCreativeTab)
     	);
-    	*/
     	
     	//パープルダイヤツルハシ
     	event.getRegistry().register(new YKItemPickaxe(tmPurpleDiamond)
@@ -634,7 +680,6 @@ public class YuzuKotoMod {
     			.setCreativeTab(YuzuKotoCreativeTab)
     	);
     	
-    	/*
     	//パープルダイヤ斧
     	event.getRegistry().register(new YKItemAxe(tmPurpleDiamond, 8.0F, -3.0F)
     			.setRegistryName(MODID, "purplediamond_axe")
@@ -648,7 +693,6 @@ public class YuzuKotoMod {
     			.setUnlocalizedName("purplediamond_shovel")
     			.setCreativeTab(YuzuKotoCreativeTab)
     	);
-    	*/
     	
     	//パープルダイヤ鍬
     	event.getRegistry().register(new YKItemHoe(tmPurpleDiamond)
@@ -674,7 +718,6 @@ public class YuzuKotoMod {
     	 *DIAMOND("diamond", 33, new int[]{3, 6, 8, 3}, 10, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2.0F);
     	 */
     	
-    	/* 無効化
     	//アーマーマテリアルの設定
     	amPurpleDiamond = EnumHelper.addArmorMaterial("PURPLE_DIAMOND", 
     			"yuzukotomod:purplediamond_armor", 
@@ -712,7 +755,6 @@ public class YuzuKotoMod {
     			.setUnlocalizedName("purplediamond_boots")
     			.setCreativeTab(YuzuKotoCreativeTab)
     	);
-    	*/
     	
     	
     	
@@ -797,7 +839,7 @@ public class YuzuKotoMod {
     			.setCreativeTab(YuzuKotoCreativeTab)
     	);
     	
-    	/* 無効化
+    	
     	// アイテムブロックを登録する
     	event.getRegistry().register(new ItemBlock(YuzuKotoBlocks.YKTE_BLOCK)
     			.setRegistryName(MODID, "ykte_block")
@@ -807,7 +849,6 @@ public class YuzuKotoMod {
     	event.getRegistry().register(new ItemBlock(YuzuKotoBlocks.YKBLOCK_CHEST)
     			.setRegistryName(MODID, "ykblock_chest")
     	);
-    	*/
     	
     	// アイテムブロックを登録する
     	event.getRegistry().register(new ItemBlock(YuzuKotoBlocks.YK_MOON_ENCHANTMENT_TABLE)
@@ -815,12 +856,16 @@ public class YuzuKotoMod {
     	);
     	
     	
-    	/* 無効化
     	// アイテムブロックを登録する
     	event.getRegistry().register(new ItemBlock(YuzuKotoBlocks.YK_LIGHT_GLASS)
     			.setRegistryName(MODID, "yk_light_glass")
     	);
-    	*/
+    	
+    	//かっぷめん
+    	event.getRegistry().register(new ItemBlock(YuzuKotoBlocks.YK_CUPMEN)
+    			.setRegistryName(MODID, "yk_cupmen")
+    	);
+    	
     	
     	//Blocks.PRISMARINE.setLightLevel(0.5F);
     	//Blocks.GLASS.setLightLevel(0.75F);
@@ -837,9 +882,8 @@ public class YuzuKotoMod {
     @SideOnly(Side.CLIENT)
     protected static void registerModels(ModelRegistryEvent event) {
     	
-    	/* obj表示検証用
     	OBJLoader.INSTANCE.addDomain(MODID);
-    	*/
+    	
     	
     	// アイテムのモデルを登録する
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLE_DIAMOND, 0,
@@ -849,15 +893,14 @@ public class YuzuKotoMod {
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YUZUKOTO_BLOCK, 0,
     			new ModelResourceLocation(YuzuKotoItems.YUZUKOTO_BLOCK.getRegistryName(), "inventory"));
 
-    	/*
     	// パープルダイヤの剣
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_SWORD, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_SWORD.getRegistryName(), "inventory"));
-    	*/
+    	
     	// パープルダイヤのツルハシ
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_PICKAXE, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_PICKAXE.getRegistryName(), "inventory"));
-    	/*
+    	
     	// パープルダイヤの斧
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_AXE, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_AXE.getRegistryName(), "inventory"));
@@ -865,11 +908,11 @@ public class YuzuKotoMod {
     	// パープルダイヤのショベル
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_SHOVEL, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_SHOVEL.getRegistryName(), "inventory"));
-    	*/
+    	
     	// パープルダイヤの鍬
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_HOE, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_HOE.getRegistryName(), "inventory"));
-    	/*
+    	
     	// パープルダイヤヘルメット
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_HELMET, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_HELMET.getRegistryName(), "inventory"));
@@ -882,7 +925,6 @@ public class YuzuKotoMod {
     	// パープルダイヤブーツ
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_BOOTS, 0,
     			new ModelResourceLocation(YuzuKotoItems.PURPLEDIAMOND_BOOTS.getRegistryName(), "inventory"));
-    	*/
     	
     	// プレゼントBOX
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.LUCKBOX_PURPLE, 0,
@@ -931,39 +973,85 @@ public class YuzuKotoMod {
     	});
     	
     	
-    	/*
-    	//寝台トロッコ
+    	//マインカート
     	RenderingRegistry.registerEntityRenderingHandler(
     			YKMineCart.class, new IRenderFactory<YKMineCart>() {
-				@SuppressWarnings("unchecked")
+				@SuppressWarnings({ "unchecked", "rawtypes" })
 				@Override
 				public Render<? super YKMineCart> createRenderFor(RenderManager manager) {
 					return new YKMineCartRenderer(manager);
 				}
     	});
-    	*/
+    	
+    	//マインカート
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKMineCartBath.class, new IRenderFactory<YKMineCartBath>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKMineCartBath> createRenderFor(RenderManager manager) {
+					return new YKRenderMineCartBath(manager);
+				}
+    	});
     	
     	
-    	/*
+    	//やかん
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKEntityKettle.class, new IRenderFactory<YKEntityKettle>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKEntityKettle> createRenderFor(RenderManager manager) {
+					return new YKRenderKettle(manager);
+				}
+    	});
+    	
+    	
+    	//やかんつきトロッコ
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKCMinecart.class, new IRenderFactory<YKCMinecart>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKCMinecart> createRenderFor(RenderManager manager) {
+					return new YKCRenderMinecart(manager);
+				}
+    	});
+    	
+    	//カップ麺つき
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKCMinecart2.class, new IRenderFactory<YKCMinecart2>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKCMinecart2> createRenderFor(RenderManager manager) {
+					return new YKCRenderMinecart2(manager);
+				}
+    	});
+    	
+    	RenderingRegistry.registerEntityRenderingHandler(
+    			YKCMinecart3.class, new IRenderFactory<YKCMinecart3>() {
+				@SuppressWarnings({ "unchecked", "rawtypes" })
+				@Override
+				public Render<? super YKCMinecart3> createRenderFor(RenderManager manager) {
+					return new YKCRenderMinecart3(manager);
+				}
+    	});
+    	
+    	
+    	
+    	
+    	
     	// アイテムのモデルを登録する
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YKTE_BLOCK, 0,
     			new ModelResourceLocation(YuzuKotoItems.YKTE_BLOCK.getRegistryName(), "inventory"));
-    	*/
     	
     	//TileEntity用のRendererを登録する
     	//ClientRegistry.registerTileEntity(YKTileEntity.class, "yktile_entity", new YKTileEntitySpRenderer());
 
-    	/*
     	//スペシャルレンダラー
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTileEntity.class, new YKTileEntitySpRenderer());
-    	*/
     	
-    	/*
+    	
     	// アイテムのモデルを登録する
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YKBLOCK_CHEST, 0,
     			new ModelResourceLocation(YuzuKotoItems.YKBLOCK_CHEST.getRegistryName(), "inventory"));
-    	*/
-    	
     	
     	//moontable
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YK_MOON_ENCHANTMENT_TABLE, 0,
@@ -974,12 +1062,15 @@ public class YuzuKotoMod {
     	ClientRegistry.bindTileEntitySpecialRenderer(YKTEMoonEnchantmentTable.class, new YKTESRMoonEnchantmentTable());
     	
     	
-    	/*
+    	
     	// 光るガラス
     	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YK_LIGHT_GLASS, 0,
     			new ModelResourceLocation(YuzuKotoItems.YK_LIGHT_GLASS.getRegistryName(), "inventory"));
-    	*/
     	
+    	
+    	//カップめん
+    	ModelLoader.setCustomModelResourceLocation(YuzuKotoItems.YK_CUPMEN, 0,
+    			new ModelResourceLocation(YuzuKotoItems.YK_CUPMEN.getRegistryName(), "inventory"));
     	
     }
 

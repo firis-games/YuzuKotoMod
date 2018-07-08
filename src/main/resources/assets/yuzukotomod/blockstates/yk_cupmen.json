@@ -1,0 +1,5 @@
+{
+    "variants": {
+		"normal": { "model": "yuzukotomod:yk_cupmen", "y": 180 }
+    }
+}
